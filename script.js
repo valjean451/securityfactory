@@ -1,4 +1,4 @@
-// Assignment Code
+// global objects
 var generateBtn = document.querySelector("#generate");
 var charset = []
 var uppercaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] 
@@ -21,99 +21,176 @@ function writePassword() {
 generateBtn.addEventListener("click", writePassword);
 
 
-
-
-
-// logic
-/* .push adds to string, .concat connects strings to each other
-
-
-instructions reference the need to select a character type. why, and what does that mean? 
-
-if (logical) {
-  do thing A
-} else if (logical 2) {
-  do thing B
-} else {
-  do thing Z
-}
-
-*/
-
-
 //Password length section
-var pwdlength = window.prompt("How long do you want your password to be? \n(minimum length 8 characters, maximum length 128 characters)")
+var validlen = false;
+while (validlen == false) {
+  var passwordLength = lengthquery();
+  console.log(passwordLength);
+  validlen = validatelength();
+}
 
-if (pwdlength < 8 || pwdlength > 128) {
-  // find out how to return to previous step
-} else {
-  // find out how to continue to next step
+//uppercase?
+var validupper = false;
+while (validupper == false) {
+  var upper = addupper();
+  console.log(upper);
+  validupper = validateup();
+}
+
+//lowercase?
+
+var validlower = false;
+while (validlower == false) {
+  var lower = addlower();
+  console.log(lower);
+  validlower = validatelow();
+}
+//numbers?
+
+var validnumbers = false;
+while (validnumbers == false) {
+  var nums = addnumbers();
+  console.log(nums);
+  validnumbers = validatenum();
+}
+
+//symbols?
+
+var validsymbol = false;
+while (validsymbol == false) {
+  var sym = addsymbols();
+  console.log(sym);
+  validsymbol = validatesym();
+
 }
 
 
-//Uppercase section
-
-var upperyn = window.prompt("Would you like to include upppercase letters?\n(Enter \'Yes\' or \'No\')")
-
-upperyn = upperyn.toLowerCase()
-
-if (upperyn === "yes") {
-  charset = charset.concat(uppercaseLetters)
-} else if (upperyn === "no") {
-  // find out how to continue to next step
-} else {
-  // find out how to return to previous step
-}
-
-//Lowercase section
-
-var loweryn = window.prompt("Would you like to include lowercase letters?\n(Enter \'Yes\' or \'No\')")
-
-loweryn = loweryn.toLowerCase()
-
-if (loweryn === "yes") {
-  charset = charset.concat(lowercaseLetters)
-} else if (loweryn === "no") {
-  // find out how to continue to next step
-} else {
-  // find out how to return to previous step
-}
-
-//Numbers section
-
-var numyn = window.prompt("Would you like to include numbers?\n(Enter \'Yes\' or \'No\')")
-
-numyn = numyn.toLowerCase()
-
-if (numyn === "yes") {
-  charset = charset.concat(zerotonine)
-} else if (numyn === "no") {
-  // find out how to continue to next step
-} else {
-  // find out how to return to previous step
-}
 
 
-//Symbols section
 
-var symyn = window.prompt("Would you like to include special characters?\n(Enter \'Yes\' or \'No\')")
 
-symyn = symyn.toLowerCase()
 
-if (symyn === "yes") {
-  charset = charset.concat(symbols)
-} else if (symyn === "no") {
-  // find out how to continue to next step
-} else {
-  // find out how to return to previous step
-}
+// generate password
 
-var pwd = ""
+function pwdgen () {
+  var pwd = ""
 
 for ( let i = 0; i < pwdlength; i++) {
   var randompos = Math.floor(Math.random() * charset.length)
   pwd = pwd.concat(charset[randompos])
 }
+}
 
-//Print password to window alert
 
+
+
+
+
+
+
+
+
+// Completed
+
+
+
+//user inputs length
+function lengthquery() {
+  var pwdlength = window.prompt("How long do you want your password to be? \n(minimum length 8 characters, maximum length 128 characters)")  
+  return pwdlength;
+  }
+
+//validate length input
+
+  function validatelength() {
+    if (passwordLength == null) {
+      console.log("user clicked \'cancel\'");
+      return true;
+    }
+    passwordLength = parseInt(passwordLength) 
+    if (isNaN(passwordLength)) {
+      alert("Please enter a number between 8 and 128.");
+      return false;
+    } 
+    if (passwordLength < 8 || passwordLength > 128) {
+      alert("Please enter a number between 8 and 128.");
+      return false;
+    }
+    return true;
+    }
+    
+//check what data sets to add
+function addupper() {
+  var upperyn = window.prompt("Would you like to include upppercase letters?\n(Enter \'Yes\' or \'No\')")
+  return upperyn;
+}
+
+function addlower() {
+  var loweryn = window.prompt("Would you like to include lowercase letters?\n(Enter \'Yes\' or \'No\')")
+  return loweryn;
+}
+
+function addnumbers() {
+  var numyn = window.prompt("Would you like to include numbers?\n(Enter \'Yes\' or \'No\')")
+  return numyn;
+}
+
+function addsymbols() {
+  var symyn = window.prompt("Would you like to include special characters?\n(Enter \'Yes\' or \'No\')")
+  return symyn;
+}
+
+
+// validate data set inputs
+
+function validateup() {
+  if (upper == null) {
+    console.log("user clicked \'cancel\'");
+    return true;
+    }
+    upper = upper.toLowerCase()
+  if (upper == "yes" || upper == "no") {
+    return true;
+  }
+  alert("Please enter \'yes\' or \'no\'.")
+  return false;
+}
+
+function validatelow() {
+  if (lower == null) {
+    console.log("user clicked \'cancel\'");
+    return true;
+    }
+    lower = lower.toLowerCase()
+  if (lower == "yes" || lower == "no") {
+    return true;
+  }
+  alert("Please enter \'yes\' or \'no\'.")
+  return false;
+}
+
+function validatenum() {
+  if (nums == null) {
+    console.log("user clicked \'cancel\'");
+    return true;
+    }
+    nums = nums.toLowerCase()
+  if (nums == "yes" || nums == "no") {
+    return true;
+  }
+  alert("Please enter \'yes\' or \'no\'.")
+  return false;
+}
+
+function validatesym() {
+  if (sym == null) {
+    console.log("user clicked \'cancel\'");
+    return true;
+    }
+    sym = sym.toLowerCase()
+  if (sym == "yes" || sym == "no") {
+    return true;
+  }
+  alert("Please enter \'yes\' or \'no\'.")
+  return false;
+}
