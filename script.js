@@ -5,11 +5,39 @@ var uppercaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "
 var lowercaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 var zerotonine = [0,1,2,3,4,5,6,7,8,9]
 var symbols = ["\"", "!", "#", "$", "%", "&", "\'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<","=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"]
-
-
+var validlen = false;
+var validupper = false;
+var validlower = false;
+var validnumbers = false;
+var pwd = ""
+var upperyn = ""
+var loweryn = ""
+var numyn = ""
+var symyn = ""
+var passwordLength = ""
+var upper = ""
+var lower = ""
+var nums = ""
+var sym = ""
 
 // Write password to the #password input
+
 function writePassword() {
+  charset = []
+  validlen = false;
+  validupper = false;
+  validlower = false;
+  validnumbers = false;
+  pwd = ""
+  upperyn = ""
+  loweryn = ""
+  numyn = ""
+  symyn = ""
+  passwordLength = ""
+  upper = ""
+  lower = ""
+  nums = ""
+  sym = ""
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
@@ -20,78 +48,76 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-
-//Password length section
-var validlen = false;
+//Core function
+function generatePassword() {
+//length?
 while (validlen == false) {
-  var passwordLength = lengthquery();
+  passwordLength = lengthquery();
   console.log(passwordLength);
   validlen = validatelength();
 }
 
+if (passwordLength == null) {
+  return ""
+}
+
 //uppercase?
-var validupper = false;
 while (validupper == false) {
-  var upper = addupper();
+  upper = addupper();
   console.log(upper);
   validupper = validateup();
 }
 
-//lowercase?
+if (upper == null) {
+  return ""
+}
 
-var validlower = false;
+//lowercase?
 while (validlower == false) {
-  var lower = addlower();
+  lower = addlower();
   console.log(lower);
   validlower = validatelow();
 }
-//numbers?
 
-var validnumbers = false;
+if (lower == null) {
+  return ""
+}
+
+//numbers?
 while (validnumbers == false) {
-  var nums = addnumbers();
+  nums = addnumbers();
   console.log(nums);
   validnumbers = validatenum();
 }
 
-//symbols?
-
-var validsymbol = false;
-while (validsymbol == false) {
-  var sym = addsymbols();
-  console.log(sym);
-  validsymbol = validatesym();
-
+if (nums == null) {
+  return ""
 }
 
+//symbols?
+var validsymbol = false;
+while (validsymbol == false) {
+  sym = addsymbols();
+  console.log(sym);
+  validsymbol = validatesym();
+}
 
+if (sym == null) {
+  return ""
+}
 
-
-
-
+//todo: validate to make sure there is at least one yes
+if (upper == "no" && lower == "no" && nums == "no" && sym == "no") {
+  alert("Please include at least one of the four categories: uppercase, lowercase, numnbers, special characters.")
+  return ""
+}
 
 // generate password
 
-function pwdgen () {
-  var pwd = ""
-
-for ( let i = 0; i < pwdlength; i++) {
-  var randompos = Math.floor(Math.random() * charset.length)
-  pwd = pwd.concat(charset[randompos])
+createset()
+pwdgen()
+return pwd
 }
-}
-
-
-
-
-
-
-
-
-
-
-// Completed
-
 
 
 //user inputs length
@@ -121,22 +147,22 @@ function lengthquery() {
     
 //check what data sets to add
 function addupper() {
-  var upperyn = window.prompt("Would you like to include upppercase letters?\n(Enter \'Yes\' or \'No\')")
+  upperyn = window.prompt("Would you like to include upppercase letters?\n(Enter \'Yes\' or \'No\')")
   return upperyn;
 }
 
 function addlower() {
-  var loweryn = window.prompt("Would you like to include lowercase letters?\n(Enter \'Yes\' or \'No\')")
+  loweryn = window.prompt("Would you like to include lowercase letters?\n(Enter \'Yes\' or \'No\')")
   return loweryn;
 }
 
 function addnumbers() {
-  var numyn = window.prompt("Would you like to include numbers?\n(Enter \'Yes\' or \'No\')")
+  numyn = window.prompt("Would you like to include numbers?\n(Enter \'Yes\' or \'No\')")
   return numyn;
 }
 
 function addsymbols() {
-  var symyn = window.prompt("Would you like to include special characters?\n(Enter \'Yes\' or \'No\')")
+  symyn = window.prompt("Would you like to include special characters?\n(Enter \'Yes\' or \'No\')")
   return symyn;
 }
 
@@ -193,4 +219,36 @@ function validatesym() {
   }
   alert("Please enter \'yes\' or \'no\'.")
   return false;
+}
+
+// generate password
+function createset() {
+  if (upper == "yes") {
+    charset = charset.concat(uppercaseLetters)
+  }
+  console.log(charset)
+  
+  if (lower == "yes") {
+    charset = charset.concat(lowercaseLetters)
+  }
+  console.log(charset)
+  
+  if (nums == "yes") {
+    charset = charset.concat(zerotonine)
+  }
+  console.log(charset)
+  
+  if (sym == "yes") {
+    charset = charset.concat(symbols)
+  }
+  console.log(charset)
+  }
+  
+function pwdgen () {
+for ( let i = 0; i < passwordLength; i++) {
+  var randompos = Math.floor(Math.random() * charset.length)
+  pwd = pwd.concat(charset[randompos])
+}
+console.log(pwd)
+return pwd
 }
